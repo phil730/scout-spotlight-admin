@@ -1,7 +1,7 @@
 // api/assessment.js - Get details for a specific assessment
 
-const { Assessment } = require('../../models');
-const { connectToDatabase } = require('../../lib/db');
+const { Assessment } = require('../models');
+const { connectToDatabase } = require('../lib/db');
 const adminAuth = require('./auth');
 
 module.exports = async (req, res) => {

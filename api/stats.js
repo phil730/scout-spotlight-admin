@@ -1,7 +1,7 @@
 // api/stats.js - Get dashboard statistics
 
-const { Session, Assessment } = require('../../models');
-const { connectToDatabase } = require('../../lib/db');
+const { Session, Assessment } = require('../models');
+const { connectToDatabase } = require('../lib/db');
 const adminAuth = require('./auth');
 
 module.exports = async (req, res) => {

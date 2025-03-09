@@ -1,6 +1,6 @@
 // api/conversation.js - Get conversation for a specific session
 
-const { getSessionMessages, getSession } = require('../../lib/session');
+const { getSessionMessages, getSession } = require('../lib/session');
 const adminAuth = require('./auth');
 
 module.exports = async (req, res) => {

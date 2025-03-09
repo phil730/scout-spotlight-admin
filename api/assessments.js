@@ -1,7 +1,7 @@
 // api/assessments.js - Get all completed assessments
 
-const { Assessment } = require('../../models');
-const { connectToDatabase } = require('../../lib/db');
+const { Assessment } = require('../models');
+const { connectToDatabase } = require('../lib/db');
 const adminAuth = require('./auth');
 
 module.exports = async (req, res) => {

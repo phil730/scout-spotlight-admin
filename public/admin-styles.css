@@ -910,3 +910,95 @@ th[data-sort].sort-desc::after {
     gap: 0.5rem;
   }
 }
+
+/* Add these styles to your admin-styles.css file */
+
+/* Markdown formatting for message content */
+.message-content h1, .message-content h2, .message-content h3,
+.message-content h4, .message-content h5, .message-content h6 {
+  margin-top: 0.8em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.message-content h1 { font-size: 1.5em; }
+.message-content h2 { font-size: 1.3em; }
+.message-content h3 { font-size: 1.2em; }
+.message-content h4 { font-size: 1.1em; }
+
+.message-content p {
+  margin-bottom: 1em;
+}
+
+.message-content ul, .message-content ol {
+  margin-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+.message-content li {
+  margin-bottom: 0.3em;
+}
+
+.message-content code {
+  background-color: #f0f0f0;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.message-content pre {
+  background-color: #f0f0f0;
+  padding: 0.8em;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin-bottom: 1em;
+}
+
+.message-content pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+.message-content blockquote {
+  border-left: 3px solid #ccc;
+  padding-left: 1em;
+  color: #666;
+  margin: 0 0 1em 0.5em;
+}
+
+.message-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.message-content table th, .message-content table td {
+  border: 1px solid #ddd;
+  padding: 0.5em;
+}
+
+.message-content table th {
+  background-color: #f5f5f5;
+}
+
+.message-content a {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.message-content hr {
+  margin: 1.5em 0;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+/* Ensure proper spacing in lists */
+.message-content ul ul, 
+.message-content ol ol,
+.message-content ul ol,
+.message-content ol ul {
+  margin-bottom: 0;
+}
