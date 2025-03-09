@@ -1,0 +1,46 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/auth",
+      "dest": "/api/auth.js"
+    },
+    {
+      "src": "/api/sessions",
+      "dest": "/api/sessions.js"
+    },
+    {
+      "src": "/api/conversation",
+      "dest": "/api/conversation.js"
+    },
+    {
+      "src": "/api/assessments",
+      "dest": "/api/assessments.js"
+    },
+    {
+      "src": "/api/assessment",
+      "dest": "/api/assessment.js"
+    },
+    {
+      "src": "/api/stats",
+      "dest": "/api/stats.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

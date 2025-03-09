@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCOUT Spotlight - Admin Dashboard</title>
+  
+  <!-- Add Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="/admin-styles.css">
+  
+  <!-- React and ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <!-- Root element for React -->
+  <div id="root"></div>
+
+  <!-- Authentication screen (will be handled by React in the updated version) -->
+  <div id="login-screen" class="screen hidden">
+    <div class="login-container">
+      <div class="logo">
+        <img src="/scout-spotlight-logo.png" alt="SCOUT Spotlight Logo" class="rounded-logo">
+        <h1>SCOUT Spotlight</h1>
+      </div>
+      <h2>Admin Dashboard</h2>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="api-key">Admin API Key</label>
+          <input type="password" id="api-key" placeholder="Enter your admin API key" required>
+        </div>
+        <button type="submit" id="login-button">Login</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Loading overlay -->
+  <div id="loading-overlay" class="hidden">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading...</div>
+  </div>
+
+  <!-- Your Dashboard Component -->
+  <script type="text/babel" src="/admin-dashboard.js"></script>
+  
+  <!-- Script to initialize the dashboard -->
+  <script type="text/babel">
+    // This will initialize the React component when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('root');
+      ReactDOM.render(<AdminDashboard />, container);
+      
+      // Hide loading screen if it's visible
+      const loadingOverlay = document.getElementById('loading-overlay');
+      if (loadingOverlay) {
+        loadingOverlay.classList.add('hidden');
+      }
+      
+      // Handle login form if needed
+      const loginForm = document.getElementById('login-form');
+      if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const apiKey = document.getElementById('api-key').value;
+          // Store API key in localStorage
+          localStorage.setItem('adminApiKey', apiKey);
+          // Hide login screen and show dashboard
+          document.getElementById('login-screen').classList.add('hidden');
+          // The React component will handle the rest
+        });
+      }
+      
+      // Check if user is already logged in
+      const apiKey = localStorage.getItem('adminApiKey');
+      if (apiKey) {
+        // Hide login screen if it's visible
+        const loginScreen = document.getElementById('login-screen');
+        if (loginScreen) {
+          loginScreen.classList.add('hidden');
+        }
+      } else {
+        // Show login screen
+        const loginScreen = document.getElementById('login-screen');
+        if (loginScreen) {
+          loginScreen.classList.remove('hidden');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
