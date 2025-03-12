@@ -5,12 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SCOUT Spotlight - Admin Dashboard</title>
   
-  <!-- Add Google Fonts -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
+  <!-- External Libraries -->
   <link rel="stylesheet" href="/admin-styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <!-- Chart.js for data visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
   <meta name="description" content="SCOUT Spotlight Admin Dashboard - Monitor and manage innovation assessments">
 </head>
 <body>
@@ -34,31 +43,39 @@
     </div>
     
     <!-- Dashboard Screen -->
-    <!-- Dashboard Screen -->
     <div id="dashboard-screen" class="screen hidden">
-      <header>
-        <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 flex justify-between items-center">
-          <div class="flex items-center">
-            <!-- Replace SVG with the logo -->
-            <img src="scout-spotlight-logo.png" alt="SCOUT Spotlight Logo" class="w-10 h-10 mr-3 rounded-logo">
-            <h1 class="text-xl font-bold text-gray-900">SCOUT Spotlight</h1>
+      <!-- Header -->
+      <header class="header">
+        <div class="header-container">
+          <div class="logo-container">
+            <img src="/scout-spotlight-logo.png" alt="SCOUT Spotlight Logo" class="header-logo">
+            <h1 class="header-title">SCOUT Spotlight</h1>
           </div>
-          <div class="flex items-center">
-            <div class="text-sm font-medium text-gray-500 mr-4">Admin Dashboard</div>
-            <button id="logout-button" class="text-sm text-red-600">Logout</button>
+          <div class="header-actions">
+            <div class="admin-label">Admin Dashboard</div>
+            <button id="logout-button" class="logout-button">Logout</button>
           </div>
         </div>
       </header>
       
-      <main class="max-w-7xl mx-auto px-4 py-6 sm:px-6">
-        <div class="mb-8" id="stats-container">
-          <div class="grid grid-cols-4 gap-6">
-            <!-- Stats cards will be inserted here -->
+      <main class="main-container">
+        <!-- Tab Navigation -->
+        <div class="tabs-container">
+          <nav class="tabs-nav">
+            <button id="tab-dashboard" class="tab-button active" data-tab="dashboard">Dashboard</button>
+            <button id="tab-assessments" class="tab-button" data-tab="assessments">Assessments</button>
+            <button id="tab-sessions" class="tab-button" data-tab="sessions">Sessions</button>
+            <button id="tab-reports" class="tab-button" data-tab="reports">Reports</button>
+          </nav>
+        </div>
+        
+        <!-- Dashboard Panel -->
+        <div id="dashboard-panel" class="panel">
+          <!-- Stats Row -->
+          <div class="stats-grid">
             <div class="stat-card">
-              <div class="stat-icon bg-blue-500">
-                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+              <div class="stat-icon bg-blue">
+                <i data-lucide="users"></i>
               </div>
               <div class="stat-content">
                 <div class="stat-label">Total Sessions</div>
@@ -67,10 +84,8 @@
             </div>
             
             <div class="stat-card">
-              <div class="stat-icon bg-green-500">
-                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+              <div class="stat-icon bg-green">
+                <i data-lucide="check-circle"></i>
               </div>
               <div class="stat-content">
                 <div class="stat-label">Completed Assessments</div>
@@ -79,11 +94,8 @@
             </div>
             
             <div class="stat-card">
-              <div class="stat-icon bg-yellow-500">
-                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
-                </svg>
+              <div class="stat-icon bg-yellow">
+                <i data-lucide="pie-chart"></i>
               </div>
               <div class="stat-content">
                 <div class="stat-label">Average Score</div>
@@ -92,153 +104,355 @@
             </div>
             
             <div class="stat-card">
-              <div class="stat-icon bg-indigo-500">
-                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
+              <div class="stat-icon bg-purple">
+                <i data-lucide="award"></i>
               </div>
               <div class="stat-content">
-                <div class="stat-label">Highest Rated Innovation</div>
-                <div class="stat-value text-sm" id="highest-rated">None</div>
+                <div class="stat-label">High Quality Assessments</div>
+                <div class="stat-value" id="high-quality-count">0</div>
               </div>
             </div>
           </div>
-        </div>
-        
-        <div class="mb-4 border-b border-gray-200">
-          <nav class="-mb-px flex space-x-8">
-            <button id="tab-sessions" class="tab-button active">Sessions</button>
-            <button id="tab-assessments" class="tab-button">Assessments</button>
-          </nav>
-        </div>
-        
-        <!-- Sessions Panel -->
-        <div id="sessions-panel" class="panel">
-          <div class="panel-header">
-            <h3 class="panel-title">Recent Sessions</h3>
-            <div class="filter-controls">
-              <input type="text" id="workshop-filter" placeholder="Filter by Workshop ID" class="filter-input">
-              <button id="apply-filter" class="filter-button">Apply</button>
+          
+          <!-- Charts Section -->
+          <div class="charts-grid">
+            <div class="chart-card">
+              <h3 class="chart-title">Score Distribution</h3>
+              <div class="chart-container">
+                <canvas id="score-distribution-chart"></canvas>
+              </div>
+            </div>
+            
+            <div class="chart-card">
+              <h3 class="chart-title">Monthly Assessments</h3>
+              <div class="chart-container">
+                <canvas id="monthly-assessments-chart"></canvas>
+              </div>
+            </div>
+            
+            <div class="chart-card">
+              <h3 class="chart-title">Key Themes</h3>
+              <div class="chart-container">
+                <canvas id="themes-chart"></canvas>
+              </div>
             </div>
           </div>
           
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Session ID</th>
-                  <th>Innovation</th>
-                  <th>Created</th>
-                  <th>Last Activity</th>
-                  <th>Workshop</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="sessions-table-body">
-                <!-- Sessions will be inserted here -->
-              </tbody>
-            </table>
-          </div>
-          
-          <div class="pagination">
-            <div class="pagination-controls">
-              <button id="prev-page" class="pagination-button" disabled>Previous</button>
-              <button id="next-page" class="pagination-button">Next</button>
+          <!-- Top Rated Section -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Top Rated Innovations</h3>
             </div>
-            <span class="pagination-info">Showing <span id="page-info">1-5 of 5</span> sessions</span>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Innovation</th>
+                    <th>Problem Value</th>
+                    <th>Solution Fit</th>
+                    <th>Value for Money</th>
+                    <th>Total Score</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="top-innovations-table-body">
+                  <!-- Top innovations will be populated here -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         
         <!-- Assessments Panel -->
         <div id="assessments-panel" class="panel hidden">
-          <div class="panel-header">
-            <h3 class="panel-title">Completed Assessments</h3>
-          </div>
-          
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Innovation</th>
-                  <th>Problem Value</th>
-                  <th>Solution Fit</th>
-                  <th>Value for Money</th>
-                  <th>Total Score</th>
-                  <th>Completed</th>
-                  <th>Actions</th>
-
-                  <!-- For Sessions Table -->
-<th data-sort="sessionId">Session ID</th>
-<th data-sort="innovationName">Innovation</th>
-<th data-sort="created">Created</th>
-<th data-sort="lastActivity">Last Activity</th>
-<th data-sort="workshopId">Workshop</th>
-<th data-sort="completed">Status</th>
-
-<!-- For Assessments Table -->
-<th data-sort="innovationName">Innovation</th>
-<th data-sort="problemValue">Problem Value</th>
-<th data-sort="solutionFit">Solution Fit</th>
-<th data-sort="valueForMoney">Value for Money</th>
-<th data-sort="totalScore">Total Score</th>
-<th data-sort="completed">Completed</th>
-
-                </tr>
-              </thead>
-              <tbody id="assessments-table-body">
-                <!-- Assessments will be inserted here -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-        
-        <!-- Conversation View -->
-        <div id="conversation-panel" class="panel hidden">
-          <div class="panel-header">
-            <h3 class="panel-title">Conversation Details</h3>
-            <button id="back-to-sessions" class="back-button">← Back</button>
-          </div>
-          
-          <div id="conversation-metadata" class="metadata-box">
-            <!-- Session metadata will be inserted here -->
-          </div>
-          
-          <h4 class="section-title">Conversation History</h4>
-          
-          <div id="conversation-messages" class="messages-container">
-            <!-- Messages will be inserted here -->
-          </div>
-        </div>
-        
-        <!-- Assessment Detail View -->
-        <div id="assessment-detail-panel" class="panel hidden">
-          <div class="panel-header">
-            <h3 class="panel-title">Assessment Details</h3>
-            <button id="back-to-assessments" class="back-button">← Back</button>
-          </div>
-          
-          <div id="assessment-metadata" class="metadata-box">
-            <!-- Assessment metadata will be inserted here -->
-          </div>
-          
-          <div class="scores-grid">
-            <!-- Score cards will be inserted here -->
-          </div>
-          
-          <div id="total-score-box" class="metadata-box">
-            <!-- Total score will be inserted here -->
-          </div>
-          
-          <div class="recommendation-section">
-            <h4 class="section-title">Final Recommendation</h4>
-            <div id="recommendation-text" class="recommendation-box">
-              <!-- Recommendation text will be inserted here -->
+          <!-- Toggle between list and detail views -->
+          <div id="assessments-list-view">
+            <div class="panel-card">
+              <div class="panel-header">
+                <h3 class="panel-title">All Completed Assessments</h3>
+                <div class="header-actions">
+                  <div class="search-container">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="assessment-search" placeholder="Search innovations..." class="search-input">
+                  </div>
+                  <button id="filter-assessments" class="action-button">
+                    <i data-lucide="filter"></i>
+                    <span>Filter</span>
+                  </button>
+                  <button id="export-assessments" class="action-button">
+                    <i data-lucide="download"></i>
+                    <span>Export</span>
+                  </button>
+                </div>
+              </div>
+              <div class="table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Innovation</th>
+                      <th>Problem Value</th>
+                      <th>Solution Fit</th>
+                      <th>Value for Money</th>
+                      <th>Total Score</th>
+                      <th>Created</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="assessments-table-body">
+                    <!-- Assessments will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+              <div class="pagination-container">
+                <div class="pagination-info">
+                  Showing <span id="page-start">1</span>-<span id="page-end">10</span> of <span id="total-items">0</span>
+                </div>
+                <div class="pagination-controls">
+                  <button id="prev-page" class="pagination-button" disabled>
+                    <i data-lucide="chevron-left"></i>
+                    Previous
+                  </button>
+                  <div id="pagination-pages" class="pagination-pages">
+                    <!-- Page numbers will be populated here -->
+                  </div>
+                  <button id="next-page" class="pagination-button">
+                    <i data-lucide="chevron-right"></i>
+                    Next
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           
-          <div class="action-buttons">
-            <button id="export-assessment-pdf" class="action-button">Export Assessment PDF</button>
+          <!-- Assessment Detail View -->
+          <div id="assessment-detail-view" class="hidden">
+            <div class="panel-card">
+              <div class="panel-header">
+                <h3 class="panel-title">Assessment Details</h3>
+                <button id="back-to-assessments" class="back-button">
+                  <i data-lucide="arrow-left"></i>
+                  Back to list
+                </button>
+              </div>
+              <div id="assessment-detail-content">
+                <!-- Assessment details will be populated here -->
+                <div class="assessment-header">
+                  <h2 id="assessment-innovation-name" class="assessment-title"></h2>
+                  <p id="assessment-date" class="assessment-date"></p>
+                </div>
+                
+                <div class="assessment-scores-grid">
+                  <div class="score-component">
+                    <h4 class="score-title">Problem Value</h4>
+                    <div id="problem-value-score" class="score-value"></div>
+                    <div id="problem-value-label" class="score-label"></div>
+                  </div>
+                  
+                  <div class="score-component">
+                    <h4 class="score-title">Solution Fit</h4>
+                    <div id="solution-fit-score" class="score-value"></div>
+                    <div id="solution-fit-label" class="score-label"></div>
+                  </div>
+                  
+                  <div class="score-component">
+                    <h4 class="score-title">Value for Money</h4>
+                    <div id="value-money-score" class="score-value"></div>
+                    <div id="value-money-label" class="score-label"></div>
+                  </div>
+                </div>
+                
+                <div class="total-score-container">
+                  <div class="total-score-header">
+                    <h4 class="total-score-title">Total Score</h4>
+                    <span id="score-quality-badge" class="quality-badge"></span>
+                  </div>
+                  <div class="progress-container">
+                    <div class="progress-label">
+                      <span>Progress</span>
+                      <span id="total-score-value"></span>
+                    </div>
+                    <div class="progress-bar-bg">
+                      <div id="total-score-progress" class="progress-bar"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="analysis-container">
+                  <h4 class="section-title">Analysis</h4>
+                  <div id="analysis-content" class="analysis-content">
+                    <!-- Analysis will be populated here -->
+                  </div>
+                </div>
+                
+                <div class="recommendation-container">
+                  <h4 class="section-title">Final Recommendation</h4>
+                  <div id="recommendation-content" class="recommendation-content">
+                    <!-- Recommendation will be populated here -->
+                  </div>
+                </div>
+                
+                <div class="action-buttons">
+                  <button id="export-assessment-pdf" class="secondary-button">
+                    <i data-lucide="download"></i>
+                    Export PDF
+                  </button>
+                  <button id="share-assessment" class="primary-button">
+                    <i data-lucide="share-2"></i>
+                    Share Assessment
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sessions Panel -->
+        <div id="sessions-panel" class="panel hidden">
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">All Sessions</h3>
+              <div class="header-actions">
+                <div class="search-container">
+                  <i data-lucide="search" class="search-icon"></i>
+                  <input type="text" id="session-search" placeholder="Search sessions..." class="search-input">
+                </div>
+                <button id="filter-sessions" class="action-button">
+                  <i data-lucide="filter"></i>
+                  <span>Filter</span>
+                </button>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Session ID</th>
+                    <th>Innovation</th>
+                    <th>Created</th>
+                    <th>Last Activity</th>
+                    <th>Workshop</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="sessions-table-body">
+                  <!-- Sessions will be populated here -->
+                </tbody>
+              </table>
+            </div>
+            <div class="pagination-container">
+              <div class="pagination-info">
+                Showing <span id="sessions-page-start">1</span>-<span id="sessions-page-end">10</span> of <span id="total-sessions-count">0</span>
+              </div>
+              <div class="pagination-controls">
+                <button id="sessions-prev-page" class="pagination-button" disabled>
+                  <i data-lucide="chevron-left"></i>
+                  Previous
+                </button>
+                <div id="sessions-pagination-pages" class="pagination-pages">
+                  <!-- Page numbers will be populated here -->
+                </div>
+                <button id="sessions-next-page" class="pagination-button">
+                  <i data-lucide="chevron-right"></i>
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Session Detail View (Hidden by default) -->
+        <div id="session-detail-view" class="hidden">
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Conversation Details</h3>
+              <button id="back-to-sessions" class="back-button">
+                <i data-lucide="arrow-left"></i>
+                Back to list
+              </button>
+            </div>
+            <div id="conversation-metadata" class="metadata-box">
+              <!-- Session metadata will be populated here -->
+            </div>
+            
+            <h4 class="section-title">Conversation History</h4>
+            
+            <div id="conversation-messages" class="messages-container">
+              <!-- Messages will be populated here -->
+            </div>
+          </div>
+        </div>
+        
+        <!-- Reports Panel -->
+        <div id="reports-panel" class="panel hidden">
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Analytics Reports</h3>
+            </div>
+            <div class="reports-grid">
+              <div class="report-card">
+                <h4 class="report-title">Innovation Categories</h4>
+                <p class="report-description">Analysis of innovations by category and performance</p>
+                <button class="view-report-button">View Report</button>
+              </div>
+              
+              <div class="report-card">
+                <h4 class="report-title">Workshop Performance</h4>
+                <p class="report-description">Compare innovation quality across different workshops</p>
+                <button class="view-report-button">View Report</button>
+              </div>
+              
+              <div class="report-card">
+                <h4 class="report-title">Score Trends</h4>
+                <p class="report-description">Historical trends of innovation scores over time</p>
+                <button class="view-report-button">View Report</button>
+              </div>
+              
+              <div class="report-card">
+                <h4 class="report-title">Key Weaknesses</h4>
+                <p class="report-description">Common improvement areas identified across innovations</p>
+                <button class="view-report-button">View Report</button>
+              </div>
+            </div>
+            
+            <div class="custom-report-section">
+              <h4 class="section-title">Custom Report</h4>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="report-type">Report Type</label>
+                  <select id="report-type" class="form-select">
+                    <option>Innovation Scores</option>
+                    <option>Workshop Analysis</option>
+                    <option>Theme Comparison</option>
+                    <option>Time Period Analysis</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="date-range">Date Range</label>
+                  <select id="date-range" class="form-select">
+                    <option>Last 30 days</option>
+                    <option>Last quarter</option>
+                    <option>Last 6 months</option>
+                    <option>Last year</option>
+                    <option>Custom range</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="export-format">Format</label>
+                  <select id="export-format" class="form-select">
+                    <option>PDF Report</option>
+                    <option>Excel Spreadsheet</option>
+                    <option>CSV Data</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-actions">
+                <button id="generate-report" class="primary-button">Generate Custom Report</button>
+              </div>
+            </div>
           </div>
         </div>
       </main>
@@ -250,7 +464,15 @@
       <div class="loading-text">Loading...</div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <!-- Initialize Lucide icons -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+  
+  <!-- Main admin JavaScript -->
   <script src="/admin.js"></script>
 </body>
 </html>
